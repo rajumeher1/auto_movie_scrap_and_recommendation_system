@@ -1,5 +1,6 @@
 import streamlit as st
 import pickle
+import random
 
 
 with open("movies.pkl", 'rb') as f:
@@ -11,10 +12,11 @@ with open("similarity.pkl", 'rb') as f:
 def recommend(movie):
     movie_index = movie_list[movie_list['title'] == movie].index[0]
     similar_movie_list = top_similar_movie[movie_index]
+    similar_5_movies = random.sample(similar_movie_list, 5)
 
     recommended_list = []
     poster_path_list = []
-    for i in similar_movie_list:
+    for i in similar_5_movies:
         recommended_list.append(movie_list.iloc[i]['title'])
         poster_path_list.append(movie_list.iloc[i]['poster_path'])
     
