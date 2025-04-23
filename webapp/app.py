@@ -3,10 +3,10 @@ import pickle
 import random
 
 
-with open("movies.pkl", 'rb') as f:
+with open("movie_list.pkl", 'rb') as f:
     movie_list = pickle.load(f)
 
-with open("similarity.pkl", 'rb') as f:
+with open("similar_movies.pkl", 'rb') as f:
     top_similar_movie = pickle.load(f)
 
 def recommend(movie):
