@@ -2,7 +2,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 def vectorize_tags(data):
-    cv = CountVectorizer(max_features=1000)
+    cv = CountVectorizer(max_features=2000)
     vectors = cv.fit_transform(data)
     return vectors
 
