@@ -15,8 +15,11 @@ def clean_dataframe(df):
     return df.reset_index(drop=True)
 
 def clean_text_column(df):
-    df["overview"] = df["overview"].apply(lambda x: x.split() if isinstance(x, str) else [])
-    for col in df.columns[4:]:
+    df['new_title'] = df['title'].apply(lambda x: x.split())
+    df["overview"] = df["overview"].apply(lambda x: x.split())
+
+    col_list = ['genres', 'keywords', 'cast', 'director']
+    for col in col_list:
         df[col] = df[col].apply(lambda x: [i.replace(' ', '') for i in x])
     return df
 
@@ -32,6 +35,6 @@ def preprocess_tags(word_list):
     return ' '.join(cleaned)
 
 def create_tags_column(df):
-    df['tags'] = df['overview'] + df['genres'] + df['keywords'] + df['cast'] + df['director']
+    df['tags'] = df['new_title'] + df['genres'] + df['keywords'] + df['cast'] + df['director'] + df['overview']
     df['tags'] = df['tags'].apply(preprocess_tags)
     return df
