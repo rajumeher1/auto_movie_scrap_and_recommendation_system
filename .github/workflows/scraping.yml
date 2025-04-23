@@ -30,6 +30,8 @@ jobs:
           python main.py
 
       - name: Commit and push results (if changes)
+        env:
+          GH_PAT: $ {{ secrets.GH_PAT }}
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "rajumeher1@users.noreply.github.com"
