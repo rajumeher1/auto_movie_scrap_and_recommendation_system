@@ -6,7 +6,7 @@ load_dotenv()
 
 API_KEY = os.getenv('API_KEY')
 BASE_URL = 'https://api.themoviedb.org/3'
-TOTAL_PAGES = 100
+TOTAL_PAGES = 250
 
 if not API_KEY:
         raise ValueError("API_KEY not set in enviromental variables")
