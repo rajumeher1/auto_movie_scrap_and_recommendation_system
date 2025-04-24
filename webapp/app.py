@@ -34,7 +34,7 @@ st.set_page_config(
     }
 )
 
-st.subheader("TMDB Movie Recommendation System")
+st.subheader("TMDB Movies Recommender")
 
 movie = st.selectbox(
     " ",
