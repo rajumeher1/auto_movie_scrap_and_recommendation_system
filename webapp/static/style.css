@@ -131,7 +131,7 @@ input[type="text"]:focus {
 }
 
 /* Mobile Responsiveness */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
     .movie-dropdown {
         width: 80%;
     }
@@ -143,7 +143,7 @@ input[type="text"]:focus {
     .movie-gallery {
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     }
-}
+} */
 
 .input-container {
     position: relative;
