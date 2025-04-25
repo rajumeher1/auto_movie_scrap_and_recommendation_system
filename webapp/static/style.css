@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #8eb88a;
+    background-color: #f4f4f4;
     margin: 0;
     padding: 0;
 }
@@ -8,7 +8,7 @@ body {
 .container {
     width: 80%;
     margin: 10px auto;
-    background-color: rgb(77, 121, 149);
+    background-color: white;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
@@ -16,7 +16,7 @@ body {
 
 .header {
     text-align: center;
-    color: #280e0e;
+    color: #333;
 }
 
 form {
@@ -26,52 +26,39 @@ form {
     align-items: center;
 }
 
-/* Style the input container */
 .input-block {
-    position: relative;
-    display: inline-block;
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 0 0 0 60px;
 }
 
-/* Style for the input field */
+.input-block label {
+    margin-bottom: 10px;
+    font-size: 18px;
+    display: block;
+}
+
 input[type="text"] {
-    width: 100%;
     padding: 10px;
-    padding-right: 30px; /* Space for the cross (X) */
     font-size: 16px;
-    border: 1px solid #ccc;
+    width: 70%;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
     border-radius: 4px;
 }
-
-/* Style the cross icon */
-.clear-icon {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    font-size: 20px;
-    color: #ccc;
-}
-
-/* Hover effect for the cross icon */
-.clear-icon:hover {
-    color: #f00;  /* Red color on hover */
-}
-
 
 button {
     padding: 10px 20px;
     background-color: #5c6bc0;
     color: white;
-    border: 0.5px black;
+    border: none;
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
-    margin-top: 10px;
 }
 
 button:hover {
-    background-color: blue;
+    background-color: #3f51b5;
 }
 
 .error {
@@ -98,6 +85,61 @@ button:hover {
 
 .movie p {
     margin-top: 10px;
-    font-size: 16px;
-    color: white;
+    font-size: 14px;
+}
+
+
+/* Mobile-friendly media queries */
+@media (max-width: 768px) {
+    /* Ensure the select and button are equal in size on smaller screens */
+    select, button {
+        font-size: 1em;
+        padding: 12px;  /* Ensure padding is consistent */
+        width: 100%;  /* Full width */
+        box-sizing: border-box;  /* Padding included in width */
+    }
+
+    /* Stack movie recommendations vertically on smaller screens */
+    .movies {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .movie {
+        width: 80%;  /* Movies take 80% of screen width */
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Further adjustments for very small screens */
+    .container {
+        padding: 10px;
+    }
+
+    .header {
+        font-size: 1.3em;
+    }
+
+    /* Ensure select box and button have same width on small screens */
+    select, button {
+        font-size: 1em;
+        padding: 12px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .movie {
+        width: 100%;  /* Full width for movie cards */
+    }
+
+    /* Reduce margin for the button */
+    button {
+        margin-top: 10px;
+    }
+
+    /* Adjust error message font size */
+    .error {
+        font-size: 0.9em;
+    }
 }

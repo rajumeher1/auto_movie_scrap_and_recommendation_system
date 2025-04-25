@@ -15,7 +15,16 @@
             <!-- Single Input Block for Typing and Autocomplete -->
             <div class="input-block">
                 <label for="movie">Select or Type a Movie:</label>
-                <input type="text" name="movie" id="movie" placeholder="Type a movie or select from the list" list="movieList" autocomplete="off" value="{{ movie if movie else '' }}">
+                <input
+                    type="text"
+                    name="movie"
+                    id="movie"
+                    placeholder="Type a movie or select from the list"
+                    list="movieList"
+                    autocomplete="off"
+                    autocurrect="off"
+                    autocapitalize="off"
+                    value="{{ movie if movie else '' }}">
                 <datalist id="movieList">
                     {% for title in movie_list_titles %}
                         <option value="{{ title }}">
