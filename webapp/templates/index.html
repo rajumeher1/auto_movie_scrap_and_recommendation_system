@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TMDB Movie Recommender</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <h2>🎥 TMDB Movie Recommender</h2>
+
+    <form method="POST" class="movie-form" autocomplete="off">
+        <label for="movie_input">Type or select a movie:</label><br>
+    
+        <div class="input-wrapper">
+            <input list="movie_titles"
+                   name="movie_input"
+                   id="movie_input"
+                   placeholder="Start typing a movie..."
+                   required
+                   value="{{ selected_movie or '' }}">
+    
+            <span class="clear-button" onclick="document.getElementById('movie_input').value = '';">×</span>
+        </div>
+    
+        <datalist id="movie_titles">
+            {% for title in movie_titles %}
+                <option value="{{ title }}">
+            {% endfor %}
+        </datalist>
+    
+        <button type="submit">Find Similar Movies</button>
+    </form>
+    
+
+    {% if selected_movie %}
+        <h3>Check out these movies that are similar to "{{ selected_movie }}"</h3>
+        <div class="movie-grid">
+            {% for movie, poster in recommendations %}
+                <div class="movie-card">
+                    <img src="https://image.tmdb.org/t/p/w500{{ poster }}" alt="{{ movie }}">
+                    <p>{{ movie }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+</body>
+<script>
+    const input = document.getElementById("movie_input");
+    const clearBtn = document.querySelector(".clear-button");
+
+    input.addEventListener("input", () => {
+        clearBtn.style.display = input.value ? "block" : "none";
+    });
+</script>
+</html>
