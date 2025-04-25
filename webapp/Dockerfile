@@ -1,6 +1,6 @@
 FROM python:3.12
-COPY . /app
-WORKDIR /app
+COPY /app
+WORKDIR webapp/ /app/
 RUN pip install -r requirements.txt
 EXPOSE @PORT
 CMD gunicorn --workers=4 --bind 0.0.0.0:$PORT app:app
