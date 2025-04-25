@@ -1,5 +1,5 @@
 FROM python:3.12
-COPY /app
+COPY . /app
 WORKDIR webapp/ /app/
 RUN pip install -r requirements.txt
 EXPOSE @PORT
