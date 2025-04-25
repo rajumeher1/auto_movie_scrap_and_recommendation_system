@@ -18,23 +18,22 @@
         <section class="movie-selection">
             <form method="POST" action="/">
                 <div class="input-container">
-                    <!-- Set the value of the input to the movie variable (typed or selected) -->
-                    <input
-                        id="movie-search"
-                        type="text"
-                        name="movie"
-                        placeholder="Type or Select a Movie"
-                        list="movie-list"
+                    <input 
+                        type="text" 
+                        id="movie-search" 
+                        name="movie" 
+                        placeholder="Type or Select a Movie" 
+                        autocomplete="off" 
+                        oninput="filterDropdown()" 
+                        onclick="toggleDropdown()"
                         value="{{ movie }}"
                     >
-                    <datalist id="movie-list">
+                    <div class="dropdown" id="dropdown">
                         {% for movie in movie_titles %}
-                            <option value="{{ movie }}">
+                            <div class="dropdown-item" onclick="selectMovie('{{ movie }}')">{{ movie }}</div>
                         {% endfor %}
-                    </datalist>
-
-                    <!-- Clear button (cross mark) -->
-                    <span class="clear-btn" id="clear-btn">×</span>
+                    </div>
+                    <span class="clear-btn" id="clear-btn" onclick="clearInput()">×</span>
                 </div>
                 <button class="recommend-btn" type="submit">Get Movie Recommendations</button>
             </form>
@@ -64,15 +63,58 @@
             <p class="no-movies">No recommendations available. Please select a movie!</p>
         {% endif %}
     </div>
+    
     <script>
         const input = document.getElementById('movie-search');
         const clearBtn = document.getElementById('clear-btn');
+        const dropdown = document.getElementById('dropdown');
     
-        // Clear input on X click
-        clearBtn.addEventListener('click', () => {
+        function toggleDropdown() {
+            dropdown.style.display = 'block';
+            filterDropdown();
+        }
+    
+        function filterDropdown() {
+            const filter = input.value.toLowerCase();
+            const items = dropdown.querySelectorAll('.dropdown-item');
+            let anyVisible = false;
+    
+            items.forEach(item => {
+                if (item.textContent.toLowerCase().includes(filter)) {
+                    item.style.display = 'block';
+                    anyVisible = true;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+    
+            dropdown.style.display = anyVisible ? 'block' : 'none';
+            toggleClearButton();
+        }
+    
+        function selectMovie(movieName) {
+            input.value = movieName;
+            dropdown.style.display = 'none';
+            toggleClearButton();
+        }
+    
+        function clearInput() {
             input.value = '';
             input.focus();
+            dropdown.style.display = 'none';
+            toggleClearButton();
+        }
+    
+        function toggleClearButton() {
+            clearBtn.style.display = input.value.trim() ? 'block' : 'none';
+        }
+    
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.input-container')) {
+                dropdown.style.display = 'none';
+            }
         });
     </script>
+    
 </body>
 </html>
