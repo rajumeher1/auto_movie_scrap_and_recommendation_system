@@ -61,21 +61,20 @@
 #         with col5:
 #             st.image(f"https://image.tmdb.org/t/p/w500/{poster_path_list[4]}", caption=f"{recommended_list[4]}")
 
-
-
 from flask import Flask, render_template, request
 import pickle
 import random
 
 app = Flask(__name__)
 
-# Load data
-with open("movie_list.pkl", 'rb') as f:
+# Load the movie list and similar movies (adjust the paths)
+with open('movie_list.pkl', 'rb') as f:
     movie_list = pickle.load(f)
 
-with open("similar_movies.pkl", 'rb') as f:
+with open('similar_movies.pkl', 'rb') as f:
     top_similar_movie = pickle.load(f)
 
+# Function to get similar movies
 def recommend(movie):
     movie_index = movie_list[movie_list['title'] == movie].index[0]
     similar_movie_list = top_similar_movie[movie_index]
@@ -86,26 +85,32 @@ def recommend(movie):
     for i in similar_5_movies:
         recommended_list.append(movie_list.iloc[i]['title'])
         poster_path_list.append(movie_list.iloc[i]['poster_path'])
-    
-    return recommended_list, poster_path_list
 
+    # Combine the recommended movie titles and poster paths into a list of tuples
+    combined_list = list(zip(recommended_list, poster_path_list))
+    return combined_list
+
+# One route to handle both movie selection and recommendations
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    recommended_movies = []
-    posters = []
-    selected_movie = None
+    # Extract movie titles from the movie_list
+    movie_titles = movie_list['title'].tolist()
 
+    error_message = None
+    combined_movies = None
+    movie = None
+
+    # If the form is submitted (i.e., movie is selected for recommendation)
     if request.method == 'POST':
-        selected_movie = request.form.get('movie_input')
+        movie = request.form['movie']  # Get selected movie from the form
+        if movie not in movie_titles:
+            error_message = "Sorry, the movie you typed is not in the list. Please try again!"
+        elif movie:
+            combined_movies = recommend(movie)  # Get recommended movies
+        else:
+            error_message = "Please select or type a valid movie!"
 
-        if selected_movie and selected_movie in movie_list['title'].values:
-            recommended_movies, posters = recommend(selected_movie)
-
-    return render_template('index.html',
-                           movie_titles=movie_list['title'].tolist(),
-                           selected_movie=selected_movie,
-                           recommendations=zip(recommended_movies, posters))
-
+    return render_template('index.html', movie_titles=movie_titles, combined_movies=combined_movies, error_message=error_message, movie=movie)
 
 if __name__ == '__main__':
     app.run(debug=True)
