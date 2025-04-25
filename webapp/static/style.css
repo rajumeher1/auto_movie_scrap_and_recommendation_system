@@ -27,6 +27,7 @@ body {
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
+    overflow: visible;
 }
 
 /* Header */
@@ -131,7 +132,7 @@ input[type="text"]:focus {
 }
 
 /* Mobile Responsiveness */
-/* @media (max-width: 768px) {
+@media (max-width: 768px) {
     .movie-dropdown {
         width: 80%;
     }
@@ -143,18 +144,17 @@ input[type="text"]:focus {
     .movie-gallery {
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     }
-} */
+}
 
 .input-container {
     position: relative;
+    width: 100%;
+    max-width: 100%;
 }
 
 #movie-search {
     width: 100%;
-    padding: 10px 40px 10px 10px;  /* Adjust the padding to make space for the clear button */
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    box-sizing: border-box;
 }
 
 .clear-btn {

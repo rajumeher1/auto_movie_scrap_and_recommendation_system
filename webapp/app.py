@@ -98,7 +98,7 @@ def index():
 
     error_message = None
     combined_movies = None
-    movie = None
+    movie =''
 
     # If the form is submitted (i.e., movie is selected for recommendation)
     if request.method == 'POST':
