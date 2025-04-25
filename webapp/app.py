@@ -67,14 +67,14 @@ import random
 
 app = Flask(__name__)
 
-# Load the movie list and similar movies (adjust the paths)
-with open('movie_list.pkl', 'rb') as f:
+# Load movie data
+with open("movie_list.pkl", 'rb') as f:
     movie_list = pickle.load(f)
 
-with open('similar_movies.pkl', 'rb') as f:
+with open("similar_movies.pkl", 'rb') as f:
     top_similar_movie = pickle.load(f)
 
-# Function to get similar movies
+# Recommendation function
 def recommend(movie):
     movie_index = movie_list[movie_list['title'] == movie].index[0]
     similar_movie_list = top_similar_movie[movie_index]
@@ -85,34 +85,26 @@ def recommend(movie):
     for i in similar_5_movies:
         recommended_list.append(movie_list.iloc[i]['title'])
         poster_path_list.append(movie_list.iloc[i]['poster_path'])
+    
+    return recommended_list, poster_path_list
 
-    # Combine the recommended movie titles and poster paths into a list of tuples
-    combined_list = list(zip(recommended_list, poster_path_list))
-    return combined_list
-
-# One route to handle both movie selection and recommendations
 @app.route('/', methods=['GET', 'POST'])
-def index():
-    # Extract movie titles from the movie_list
-    movie_titles = movie_list['title'].tolist()
+def home():
+    movie_list_titles = movie_list['title'].tolist()
 
-    error_message = None
-    combined_movies = None
-    movie =''
-
-    # If the form is submitted (i.e., movie is selected for recommendation)
     if request.method == 'POST':
-        movie = request.form['movie']  # Get selected movie from the form
-        if movie not in movie_titles:
-            error_message = "Sorry, the movie you typed is not in the list. Please try again!"
-        elif movie:
-            combined_movies = recommend(movie)  # Get recommended movies
-        else:
-            error_message = "Please select or type a valid movie!"
+        movie = request.form.get('movie')
 
-    return render_template('index.html', movie_titles=movie_titles, combined_movies=combined_movies, error_message=error_message, movie=movie)
+        # Check if the movie typed by the user exists in the list
+        if movie not in movie_list_titles:
+            return render_template('index.html', error="Movie not found in the list. Please type a valid movie name.", movie_list_titles=movie_list_titles)
+
+        recommended_list, poster_path_list = recommend(movie)
+        recommendations = list(zip(recommended_list, poster_path_list))
+        return render_template('index.html', movie=movie, recommendations=recommendations, movie_list_titles=movie_list_titles)
+
+    return render_template('index.html', movie_list_titles=movie_list_titles, recommendations=None)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-

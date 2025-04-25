@@ -5,116 +5,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Recommender</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <div class="container">
-        <!-- Header Section -->
-        <header class="header">
-            <h1 class="title">Movie Recommender 🎬</h1>
-            <p class="subtitle">Find similar movies based on your favorites!</p>
-        </header>
+        <h2 class="header">TMDB Movies Recommender</h2>
 
-        <!-- Movie Selection -->
-        <section class="movie-selection">
-            <form method="POST" action="/">
-                <div class="input-container">
-                    <input 
-                        type="text" 
-                        id="movie-search" 
-                        name="movie" 
-                        placeholder="Type or Select a Movie" 
-                        autocomplete="off" 
-                        oninput="filterDropdown()" 
-                        onclick="toggleDropdown()"
-                        value="{{ movie }}"
-                    >
-                    <div class="dropdown" id="dropdown">
-                        {% for movie in movie_titles %}
-                            <div class="dropdown-item" onclick="selectMovie('{{ movie }}')">{{ movie }}</div>
-                        {% endfor %}
-                    </div>
-                    <span class="clear-btn" id="clear-btn" onclick="clearInput()">×</span>
-                </div>
-                <button class="recommend-btn" type="submit">Get Movie Recommendations</button>
-            </form>
-        </section>
+        <form method="POST" id="movie-form">
+            <!-- Single Input Block for Typing and Autocomplete -->
+            <div class="input-block">
+                <label for="movie">Select or Type a Movie:</label>
+                <input type="text" name="movie" id="movie" placeholder="Type a movie or select from the list" list="movieList" autocomplete="off" value="{{ movie if movie else '' }}">
+                <datalist id="movieList">
+                    {% for title in movie_list_titles %}
+                        <option value="{{ title }}">
+                    {% endfor %}
+                </datalist>
+                <!-- Clear (X) Icon -->
+                <span class="clear-icon" id="clear-icon">&times;</span>
+            </div>
 
-        <!-- Error Message -->
-        {% if error_message %}
-            <section class="error-message">
-                <p class="error-text">{{ error_message }}</p>
-            </section>
+            <button class="btn" type="submit">Find Similar Movies</button>
+        </form>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
         {% endif %}
 
-        <!-- Recommended Movies -->
-        {% if combined_movies %}
-        <section class="recommended-movies">
-            <h3>Recommended Movies</h3>
-            <div class="movie-gallery">
-                {% for movie, poster in combined_movies %}
-                    <div class="movie-card">
-                        <img src="https://image.tmdb.org/t/p/w500{{ poster }}" alt="{{ movie }}">
-                        <p>{{ movie }}</p>
+        {% if recommendations %}
+            <h3>Check out these movies that are similar to '{{ movie }}'</h3>
+            <div class="movies">
+                {% for title, poster in recommendations %}
+                    <div class="movie">
+                        <img src="https://image.tmdb.org/t/p/w500{{ poster }}" alt="{{ title }}">
+                        <p>{{ title }}</p>
                     </div>
                 {% endfor %}
             </div>
-        </section>
-        {% else %}
-            <p class="no-movies">No recommendations available. Please select a movie!</p>
         {% endif %}
     </div>
-    
+
+    <!-- JavaScript to handle the clearing of the input field -->
     <script>
-        const input = document.getElementById('movie-search');
-        const clearBtn = document.getElementById('clear-btn');
-        const dropdown = document.getElementById('dropdown');
-    
-        function toggleDropdown() {
-            dropdown.style.display = 'block';
-            filterDropdown();
-        }
-    
-        function filterDropdown() {
-            const filter = input.value.toLowerCase();
-            const items = dropdown.querySelectorAll('.dropdown-item');
-            let anyVisible = false;
-    
-            items.forEach(item => {
-                if (item.textContent.toLowerCase().includes(filter)) {
-                    item.style.display = 'block';
-                    anyVisible = true;
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-    
-            dropdown.style.display = anyVisible ? 'block' : 'none';
-            toggleClearButton();
-        }
-    
-        function selectMovie(movieName) {
-            input.value = movieName;
-            dropdown.style.display = 'none';
-            toggleClearButton();
-        }
-    
-        function clearInput() {
-            input.value = '';
-            input.focus();
-            dropdown.style.display = 'none';
-            toggleClearButton();
-        }
-    
-        function toggleClearButton() {
-            clearBtn.style.display = input.value.trim() ? 'block' : 'none';
-        }
-    
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.input-container')) {
-                dropdown.style.display = 'none';
+        // Get references to the input and the clear icon
+        const inputField = document.getElementById("movie");
+        const clearIcon = document.getElementById("clear-icon");
+
+        // Show the cross icon when user types in the input field
+        inputField.addEventListener("input", function() {
+            if (inputField.value !== "") {
+                clearIcon.style.display = "block";  // Show cross icon
+            } else {
+                clearIcon.style.display = "none";   // Hide cross icon when input is empty
             }
         });
+
+        // Add a click event to the clear icon to clear the input
+        clearIcon.addEventListener("click", function() {
+            inputField.value = "";  // Clear the input field
+            clearIcon.style.display = "none";  // Hide the cross icon
+        });
     </script>
-    
 </body>
 </html>
