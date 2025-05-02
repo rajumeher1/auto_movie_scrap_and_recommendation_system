@@ -4,7 +4,7 @@ A fully automated pipeline that scrapes the latest movies from TMDB, processes t
 
 ## Features
 
-- Automated monthly scraping of movie data using TMDB API  
+- Automated weekly scraping of movie data using TMDB API  
 - NLP-based content filtering using genres, keywords, cast, and overview  
 - Preprocessed data stored in .pkl files for fast web access  
 - GitHub Actions workflow for automated data updates  
@@ -22,7 +22,7 @@ A fully automated pipeline that scrapes the latest movies from TMDB, processes t
 └── webapp/                  # Root for Flask deployment on Render  
 │   ├── app.py               # Flask web application  
 │   ├── templates/           # HTML templates for the Flask app  
-│   ├── static/              # Static files (CSS, JS)  
+│   ├── static/              # Static files (CSS, HTML)  
 │   ├── requirements.txt     # Dependencies for web app  
 │   ├── Dockerfile           # Create Docker Image
 │   ├── Procfile             # Load the rund command
