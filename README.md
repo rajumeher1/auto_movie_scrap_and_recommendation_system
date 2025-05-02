@@ -68,9 +68,9 @@ Set the following secrets in your GitHub repo:
 
 ## GitHub Actions
 
-The workflow runs monthly using:
+The workflow runs every monday using:
 ```
-cron: '39 04 1 * *'
+cron: '39 04 * * 1'
 ```
 
 You can also run it manually via the Actions tab.
