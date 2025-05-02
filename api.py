@@ -15,14 +15,14 @@ if not API_KEY:
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def scrap_movies():
-    logging.info("Starting Movie Scraping...")
+    logging.info("Movie Scraping Started...")
     movie_list = []
 
     try:            
         for page in range(1, TOTAL_PAGES + 1):
 
             if page % 50 == 0:
-                logging.info(f"fetching page {page}...")
+                logging.info(f"fetched {page} pages so far, continuing with the rest...")
 
             params = {
                 'api_key': API_KEY,
