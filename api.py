@@ -7,7 +7,7 @@ load_dotenv()
 
 API_KEY = os.getenv('API_KEY')
 BASE_URL = 'https://api.themoviedb.org/3'
-TOTAL_PAGES = 250
+TOTAL_PAGES = 10
 
 if not API_KEY:
         raise ValueError("API_KEY not set in enviromental variables")
@@ -21,7 +21,7 @@ def scrap_movies():
     try:            
         for page in range(1, TOTAL_PAGES + 1):
 
-            if page % 50 == 0:
+            if page % 5 == 0:
                 logging.info(f"fetched {page} pages so far, continuing with the rest...")
 
             params = {
