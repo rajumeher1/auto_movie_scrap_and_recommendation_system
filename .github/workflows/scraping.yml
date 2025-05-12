@@ -2,7 +2,7 @@ name: Automate Movie Scraping
 
 on:
   schedule:
-    - cron: '30 9 * * 1'  # Runs every Monday at 04:39 (UTC)
+    - cron: '48 9 * * 1'  # Runs every Monday at 04:39 (UTC)
   workflow_dispatch:  # Allows manual triggering of the action
 
 jobs:
