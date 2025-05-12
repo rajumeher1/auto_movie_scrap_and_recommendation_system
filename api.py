@@ -2,6 +2,7 @@ import requests
 import os
 import logging
 from dotenv import load_dotenv
+import time
 
 load_dotenv()
 
@@ -56,6 +57,9 @@ def scrap_movies():
                 movie_item['director'] = [i['name'] for i in dt_data['credits']['crew'] if i['job'] == 'Director']
 
                 movie_list.append(movie_item)
+
+                time.sleep(0.04)
+
         logging.info("Movie Scraping completed successfully.")
     
     except Exception as e:
