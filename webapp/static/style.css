@@ -149,6 +149,11 @@ button:focus {
         font-size: 1.3em;
     }
 
+    .input-block {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
     input[type="text"],
     button {
         width: 100%;
@@ -158,9 +163,9 @@ button:focus {
     }
 
     .movie {
-        width: 100%;
-        max-width: 100%;
-        flex: 1 1 100%;
+        width: 80%;
+        max-width: 80%;
+        flex: 1 1 80%;
     }
 
     .error {
