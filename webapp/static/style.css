@@ -143,3 +143,26 @@ button:hover {
         font-size: 0.9em;
     }
 }
+
+.movie {
+    text-align: center;
+    width: 18%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.movie:hover {
+    transform: scale(1.2);
+    z-index: 10;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.movie-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.movie-link:hover {
+    text-decoration: none;
+}

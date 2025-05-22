@@ -25,13 +25,15 @@ def recommend(movie):
     similar_movie_list = top_similar_movies[movie_index]
     similar_5_movies = random.sample(similar_movie_list, 5)
 
+    id_list = []
     recommended_list = []
     poster_path_list = []
     for i in similar_5_movies:
+        id_list.append(movie_list.iloc[i]['id'])
         recommended_list.append(movie_list.iloc[i]['title'])
         poster_path_list.append(movie_list.iloc[i]['poster_path'])
 
-    return recommended_list, poster_path_list
+    return id_list, recommended_list, poster_path_list
 
 # Handle get request to display form
 @app.get("/", response_class=HTMLResponse)
@@ -55,8 +57,8 @@ async def recommend_movie(request: Request, movie: str = Form(...)):
             'recommendations': None
         })
     
-    recommended_movie_list, poster_path_list = recommend(movie)
-    recommendations = list(zip(recommended_movie_list, poster_path_list))
+    id_list, recommended_movie_list, poster_path_list = recommend(movie)
+    recommendations = list(zip(id_list, recommended_movie_list, poster_path_list))
     return templates.TemplateResponse('index.html', {
         'request': request,
         'movie': movie,
