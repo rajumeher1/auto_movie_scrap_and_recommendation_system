@@ -150,7 +150,9 @@ button:focus {
     }
 
     .input-block {
-        width: fit-content;
+        width: 100%;
+        margin-bottom: 20px;
+        padding: 0 0 0 0;
     }
 
     input[type="text"],
