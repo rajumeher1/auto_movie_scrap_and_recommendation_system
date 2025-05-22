@@ -34,14 +34,14 @@ def recommend(movie):
     return recommended_list, poster_path_list
 
 # Handle get request to display form
-@app.get("/", response_class=HTMLResponse)
-async def home(request: Request):
-    movie_list_titles = movie_list['title'].tolist()
-    return templates.TemplateResponse('index.html', {
-        'request': request,
-        'movie_list_titles': movie_list_titles,
-        'reccomendations': None
-    })
+# @app.get("/", response_class=HTMLResponse)
+# async def home(request: Request):
+#     movie_list_titles = movie_list['title'].tolist()
+#     return templates.TemplateResponse('index.html', {
+#         'request': request,
+#         'movie_list_titles': movie_list_titles,
+#         'reccomendations': None
+#     })
 
 @app.post('/', response_class=HTMLResponse)
 async def recommend_movie(request: Request, movie: str = Form(...)):
@@ -50,7 +50,7 @@ async def recommend_movie(request: Request, movie: str = Form(...)):
     if movie not in movie_list_titles:
         return templates.TemplateResponse('index.html', {
             'request': request,
-            'error': 'Movie not found in the list. Please type a valid movie name.',
+            'error': 'Movie not found in the list. Please select a valid movie from the list.',
             'movie_list_titles': movie_list_titles,
             'recommendations': None
         })
