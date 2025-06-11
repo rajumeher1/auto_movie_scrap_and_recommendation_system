@@ -22,8 +22,11 @@ def scrap_movies():
     try:            
         for page in range(1, TOTAL_PAGES + 1):
 
-            if page % 50 == 0:
-                logging.info(f"fetched {page} pages so far, continuing with the rest...")
+            if page == TOTAL_PAGES:
+                logging.info(f"Fetched all {page} pages. Fetching completed.")
+            elif page % 50 == 0:
+                logging.info(f"Fetched {page} pages so far, continuing with the rest...")
+
 
             params = {
                 'api_key': API_KEY,
